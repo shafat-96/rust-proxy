@@ -1,4 +1,5 @@
-FROM rust:1.77 as builder
+# Use Rust 1.82 or newer to fix zerovec build
+FROM rust:1.84.0 as builder
 
 WORKDIR /app
 COPY . .
