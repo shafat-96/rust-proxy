@@ -185,7 +185,7 @@ async fn main() -> std::io::Result<()> {
             .service(m3u8_proxy)
     })
     .workers(num_cpus::get())
-    .bind("127.0.0.1:8080")?
+    .bind("0.0.0.0:8080")?
     .run()
     .await
 }
