@@ -22,7 +22,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 ---
 
-## 🚀 Running the Server
+## Running the Server
 
 ```bash
 cargo run
@@ -36,7 +36,7 @@ http://127.0.0.1:8080
 
 ```
 
-## 🌐 API Usage
+## API Usage
 
 ### Proxy a direct file or media segment
 
