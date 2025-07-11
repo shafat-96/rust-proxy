@@ -4,14 +4,12 @@ A fast, no-caching proxy server for `.m3u8` HLS playlists and segments, built us
 
 It rewrites `.m3u8` files so that all segment requests (like `.ts`, `.vtt`, etc.) go through the same proxy — enabling CORS and header manipulation.
 
----
 
 - Streams `.m3u8`, `.ts`, `.vtt`, etc.
 - Supports custom headers via `?headers=...`
 - Handles CORS automatically
 - Fast: uses keep-alive connection pooling
 
----
 
 ## Requirements
 
@@ -20,7 +18,6 @@ It rewrites `.m3u8` files so that all segment requests (like `.ts`, `.vtt`, etc.
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
----
 
 ## Running the Server
 
