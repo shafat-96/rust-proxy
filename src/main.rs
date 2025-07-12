@@ -56,7 +56,13 @@ async fn m3u8_proxy(req: HttpRequest) -> impl Responder {
             }
         }
     }
-
+    
+    // origin
+    if let Some(origin) = query.get("origin") {
+        if let Ok(origin_value) = HeaderValue::from_str(origin) {
+            headers.insert("Origin", origin_value);
+        }
+    }
     // Optional Range support
     if let Some(range) = req.headers().get("Range") {
         headers.insert("Range", range.clone());

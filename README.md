@@ -7,6 +7,7 @@ It rewrites `.m3u8` files so that all segment requests (like `.ts`, `.vtt`, etc.
 
 - Streams `.m3u8`, `.ts`, `.vtt`, etc.
 - Supports custom headers via `?headers=...`
+- Supports custom `Origin` via `?origin=...`
 - Handles CORS automatically
 - Fast: uses keep-alive connection pooling
 
@@ -21,16 +22,30 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 ## Running the Server
 
+### Option 1: Native (via Cargo)
+
 ```bash
 cargo run
-
 ```
 
 The server will start at (change port from `main.rs` if you want to):
 
 ```
 http://127.0.0.1:8080
+```
 
+---
+
+### Option 2: Docker
+
+```bash
+docker pull ghcr.io/zuhaz/rustproxy:latest
+```
+
+You can also run it directly:
+
+```bash
+docker run -p 8080:8080 ghcr.io/zuhaz/rustproxy:latest
 ```
 
 ## API Usage
@@ -51,6 +66,11 @@ GET /?url=https://example.com/playlist.m3u8
 
 ```
 GET /?url=https://example.com/playlist.m3u8&headers={"Referer":"https://example.com"}
+```
+### Proxy with origin (string)
+
+```
+GET /?url=https://example.com/playlist.m3u8&origin=https://example.com
 ```
 
 ---
