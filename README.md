@@ -4,21 +4,30 @@ A fast, no-caching proxy server for `.m3u8` HLS playlists and segments, built us
 
 It rewrites `.m3u8` files so that all segment requests (like `.ts`, `.vtt`, etc.) go through the same proxy — enabling CORS and header manipulation.
 
-
 - Streams `.m3u8`, `.ts`, `.vtt`, etc.
-- Supports custom headers via `?headers=...`
-- Supports custom `Origin` via `?origin=...`
+- Supports custom headers via `&headers=...`
+- Supports custom `Origin` via `&origin=...`
 - Handles CORS automatically
 - Fast: uses keep-alive connection pooling
 
+---
 
-## Requirements
+## Getting Started
 
-> If you don't have Rust/Cargo installed:
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/zuhaz/rust-proxy.git
+cd rust-proxy
+```
+
+### 2. (If needed) Install Rust
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
+
+---
 
 ## Running the Server
 
@@ -28,25 +37,31 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 cargo run
 ```
 
-The server will start at (change port from `main.rs` if you want to):
+The server will start at:
 
 ```
 http://127.0.0.1:8080
 ```
 
+To change the port or allowed origins, edit `main.rs`.
+
 ---
 
 ### Option 2: Docker
+
+Pull the latest image:
 
 ```bash
 docker pull ghcr.io/zuhaz/rustproxy:latest
 ```
 
-You can also run it directly:
+Run it:
 
 ```bash
 docker run -p 8080:8080 ghcr.io/zuhaz/rustproxy:latest
 ```
+
+---
 
 ## API Usage
 
@@ -67,6 +82,7 @@ GET /?url=https://example.com/playlist.m3u8
 ```
 GET /?url=https://example.com/playlist.m3u8&headers={"Referer":"https://example.com"}
 ```
+
 ### Proxy with origin (string)
 
 ```
@@ -75,9 +91,56 @@ GET /?url=https://example.com/playlist.m3u8&origin=https://example.com
 
 ---
 
+## Configuration
+
+The server will automatically load environment settings from the included `.env` file. No additional setup is required.
+
+### To change CORS behavior:
+
+Edit `ENABLE_CORS` in the `.env` file:
+
+```env
+ENABLE_CORS=true
+```
+
+Or disable it:
+
+```env
+ENABLE_CORS=false
+```
+
+
+### To add a new allowed origin
+
+You need to update **both** of the following:
+
+#### 1. Add it to the `ALLOWED_ORIGINS` array in `main.rs`:
+
+```rust
+static ALLOWED_ORIGINS: Lazy<[&str; 4]> = Lazy::new(|| [
+    "http://localhost:5173",
+    "http://localhost:3000",
+    "http://aniwave.at",
+    "http://your-new-origin.com", // <-- add here
+]);
+```
+
+#### 2. Add a matching `.allowed_origin(...)` line in the CORS middleware:
+
+```rust
+let cors = Cors::default()
+    .allowed_origin("http://localhost:5173")
+    .allowed_origin("http://localhost:3000")
+    .allowed_origin("http://aniwave.at")
+    .allowed_origin("http://your-new-origin.com") // <-- add this
+```
+
+Both changes are required for proper CORS behavior when `ENABLE_CORS=true`.
+
 ## LICENSE
 
 Using: [Apache License 2.0](LICENSE)
+
 
 ## Credits
 

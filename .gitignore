@@ -30,9 +30,5 @@ Thumbs.db
 node_modules/
 dist/
 
-# dotenv
-.env
-.env.*
-
 # Rust project-specific
 /.cargo/
