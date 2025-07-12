@@ -204,7 +204,7 @@ async fn m3u8_proxy(req: HttpRequest) -> impl Responder {
                             Ok(url) => url,
                             Err(_) => return line.to_string(),
                         };
-                        let mut new_q = format!("url={}", urlencoding::encode(resolved.as_str()));
+                        let mut new_q = format!("url={}", resolved);
                         if let Some(h) = &query.headers {
                             new_q.push_str(&format!("&headers={}", h));
                         }
@@ -220,7 +220,7 @@ async fn m3u8_proxy(req: HttpRequest) -> impl Responder {
                                 Ok(url) => url,
                                 Err(_) => return line.to_string(),
                             };
-                            let mut new_q = format!("url={}", urlencoding::encode(resolved.as_str()));
+                            let mut new_q = format!("url={}", resolved);
                             if let Some(h) = &query.headers {
                                 new_q.push_str(&format!("&headers={}", h));
                             }
@@ -238,7 +238,7 @@ async fn m3u8_proxy(req: HttpRequest) -> impl Responder {
                     Ok(url) => url,
                     Err(_) => return line.to_string(),
                 };
-                let mut new_q = format!("url={}", urlencoding::encode(resolved.as_str()));
+                let mut new_q = format!("url={}", resolved);
                 if let Some(h) = &query.headers {
                     new_q.push_str(&format!("&headers={}", h));
                 }
