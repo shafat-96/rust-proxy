@@ -109,30 +109,17 @@ Or disable it:
 ENABLE_CORS=false
 ```
 
-
 ### To add a new allowed origin
 
-You need to update **both** of the following:
-
-#### 1. Add it to the `ALLOWED_ORIGINS` array in `main.rs`:
+You need to update the following section in `main.rs`:
 
 ```rust
-static ALLOWED_ORIGINS: Lazy<[&str; 4]> = Lazy::new(|| [
+static ALLOWED_ORIGINS: Lazy<[&str; N]> = Lazy::new(|| [
     "http://localhost:5173",
     "http://localhost:3000",
     "http://aniwave.at",
     "http://your-new-origin.com", // <-- add here
 ]);
-```
-
-#### 2. Add a matching `.allowed_origin(...)` line in the CORS middleware:
-
-```rust
-let cors = Cors::default()
-    .allowed_origin("http://localhost:5173")
-    .allowed_origin("http://localhost:3000")
-    .allowed_origin("http://aniwave.at")
-    .allowed_origin("http://your-new-origin.com") // <-- add this
 ```
 
 Both changes are required for proper CORS behavior when `ENABLE_CORS=true`.
