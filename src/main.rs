@@ -19,7 +19,7 @@ mod templates;
 static ALLOWED_ORIGINS: Lazy<[&str; 3]> = Lazy::new(|| [
     "http://localhost:5173",
     "http://localhost:3000",
-    "http://aniwave.at",
+    "https://rust.madaraverse.online",
 ]);
 
 // Reqwest client pool
