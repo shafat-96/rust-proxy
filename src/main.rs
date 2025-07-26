@@ -17,7 +17,7 @@ mod templates;
 
 // Allowed origins
 static ALLOWED_ORIGINS: Lazy<[&str; 3]> = Lazy::new(|| [
-    "https://livepush.io",
+    "https://www.livereacting.com",
     "http://localhost:3000",
     "https://proxy.madaraverse.online",
 ]);
